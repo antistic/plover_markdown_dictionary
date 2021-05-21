@@ -1,0 +1,12 @@
+{
+"HAERB": "#{^}",
+"HEL/HRO": "hello",
+"HEU": "hi",
+"KW-GS": "{~|\"^}",
+"R*R": "{#Return}{^}",
+"R-R": "{^~|\n^}",
+"SKW-T": "{'^}",
+"SKWRAURBGS": "{^\n\n^}{-|}",
+"SPWHRAERB": "{^\\^}",
+"TEFT": "test"
+}
