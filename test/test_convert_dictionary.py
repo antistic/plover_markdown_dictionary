@@ -39,15 +39,12 @@ TEFT: test
     json_dict.update(md_dict)
     json_dict.save()
 
-    assert (
-        json_path.read_text()
-        == """{
-"HEL/HRO": "hello",
-"HEU": "hi",
-"TEFT": "test"
-}
-"""
-    )
+    result = json.loads(json_path.read_text())
+    assert result == {
+        "HEU": "hi",
+        "HEL/HRO": "hello",
+        "TEFT": "test",
+    }
 
 
 def test_json_to_md(tmp_path):
@@ -105,7 +102,7 @@ def test_json_to_md_to_json(tmp_path):
     json2_dict.update(md2_dict)
     json2_dict.save()
 
-    assert json2_path.read_text() == json1_path.read_text()
+    assert json.loads(json2_path.read_text()) == json.loads(json1_path.read_text())
 
 
 @pytest.mark.slow

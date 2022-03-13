@@ -8,5 +8,7 @@
 "SKW-T": "{'^}",
 "SKWRAURBGS": "{^\n\n^}{-|}",
 "SPWHRAERB": "{^\\^}",
+"S": "double \" and single '",
+"T": "{^~|\n\n}",
 "TEFT": "test"
 }
