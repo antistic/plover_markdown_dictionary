@@ -4,20 +4,23 @@ plover source code for dictionary copy:
   https://github.com/openstenoproject/plover/blob/4ad9c3077a2821aaf37f52afee6f2fdf800a2d42/plover/gui_qt/dictionaries_widget.py#L396
 """
 from pathlib import Path
+import json
 import pytest
 
 from plover.dictionary.json_dict import JsonDictionary
 from plover.oslayer.config import ASSETS_DIR
+from plover.registry import registry
 from plover import system
-from plover.system import english_stenotype
 
 from plover_markdown_dictionary import MarkdownDictionary
 
 TEST_DATA = Path("./test/data")
 
+registry.update()
+system.setup("English Stenotype")
+
 
 def test_md_to_json(tmp_path):
-    system.setup("English Stenotype", system_mod=english_stenotype)
     json_path = tmp_path / "dict.json"
     md_path = tmp_path / "dict.md"
 
@@ -48,7 +51,6 @@ TEFT: test
 
 
 def test_json_to_md(tmp_path):
-    system.setup("English Stenotype", system_mod=english_stenotype)
     json_path = tmp_path / "dict.json"
     md_path = tmp_path / "dict.md"
 
@@ -83,7 +85,6 @@ TEFT: test
 
 
 def test_json_to_md_to_json(tmp_path):
-    system.setup("English Stenotype", system_mod=english_stenotype)
     json1_path = TEST_DATA / "example.json"
     json2_path = tmp_path / "dict2.json"
     md_path = tmp_path / "dict.md"
@@ -107,12 +108,8 @@ def test_json_to_md_to_json(tmp_path):
 
 @pytest.mark.slow
 def test_load_main_dict(tmp_path):
-
-    system.setup("English Stenotype", system_mod=english_stenotype)
-
     MAIN_DICT = Path(ASSETS_DIR) / "main.json"
     md_path = tmp_path / "output.md"
-    json_path = tmp_path / "output.json"
 
     json1_dict = JsonDictionary().create(str(MAIN_DICT))
     json1_dict._load(str(MAIN_DICT))
