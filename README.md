@@ -285,14 +285,17 @@ There are other plover dictionary formats that allow comments, but all of them h
 
 ### Performance
 
-Tests with the plover main dictionary, using my laptop. I haven't tried very hard to optimise this, so it's probably possible to go faster.
+Basic tests with the plover main dictionary using [time.py](.scripts/time.py) on my laptop.
 
-| Test                      | Time  |
-| ------------------------- | ----- |
-| Load JSON                 | 1.32s |
-| Load Markdown             | 2.36s |
-| Load JSON + Save JSON     | 2.40s |
-| Load JSON + Save Markdown | 2.72s |
+I haven't tried very hard to optimise this, so it's probably possible to go faster.
+
+| Test                          | Time  |
+| ----------------------------- | ----- |
+| Load JSON                     | 0.44s |
+| Load JSON + Save JSON         | 1.15s |
+| Load JSON + Save Markdown     | 1.52s |
+| Load Markdown                 | 1.48s |
+| Load Markdown + Save Markdown | 2.36s |
 
 ### Why use `(UPDATED)` or `(DELETED)` tags?
 
