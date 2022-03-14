@@ -139,9 +139,12 @@ KWRE: "yes"
 ```yaml
 SKW-T: \' # single quote character
 KR-GS: \" # double quote character
-PW-RB: \\ # backslash
 HAERB: \# # hash character on the right hand side
 '#-T': 9 # you should not escape the # in strokes
+PW-RB: \\ # backslash
+R-R: \\n # newline
+R*R: \\r # other newline
+TAB: \\t # tab
 ```
 
 - But you might prefer to use quotes:
@@ -149,9 +152,12 @@ HAERB: \# # hash character on the right hand side
 ```yaml
 SKW-T: "'"
 KR-GS: '"'  # you can quote double quotes with single quotes
-PW-RB: "\\" # backslashes always need escaping, whether they're in quotes or not
 HAERB: '#'
-S-PS: ' ' # space, or anything with a starting or trailing space
+PW-RB: "\\" # backslashes always need escaping, whether they're in quotes or not
+R-R: "\\n" # same with newlines
+R*R: "\\r"
+TAB: "\\t" # and tabs
+S-PS: ' ' # you'll need quotes for anything with starting or trailing spaces
 ```
 
 ### Comments

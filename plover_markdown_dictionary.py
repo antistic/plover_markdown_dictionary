@@ -43,13 +43,18 @@ class Entry:
             else ""
         )
 
-        value_to_write = (self.updated_value or self.value).replace("\\", "\\\\")
+        value_to_write = (
+            (self.updated_value or self.value)
+            .replace("\\", "\\\\")
+            .replace("\n", "\\\\n")
+            .replace("\r", "\\\\r")
+            .replace("\t", "\\\\t")
+        )
         if self.value_quote == "":
             value_to_write = (
                 value_to_write.replace('"', '\\"')
                 .replace("'", "\\'")
                 .replace("#", "\\#")
-                .replace("\n", "\\\\n")
             )
         elif self.value_quote == "'":
             value_to_write = value_to_write.replace("'", "\\'")
@@ -115,7 +120,7 @@ def entry_from_text(text, is_new=False):
     elif prefix == UPDATED_PREFIX:
         is_updated = True
 
-    key_quote = ''
+    key_quote = ""
     key_string = left
     if left[0] in ['"', "'"]:
         if left[0] != left[-1]:
@@ -142,7 +147,8 @@ def entry_from_text(text, is_new=False):
         value, padding, comment = right_match.groups()
         for c in ["'", '"', "#", "\\"]:
             value = value.replace(f"\\{c}", c)
-        value = value.replace("\\n", "\n")
+
+    value = value.replace("\\n", "\n").replace("\\r", "\r").replace("\\t", "\t")
 
     return Entry(
         key=key,
@@ -251,7 +257,7 @@ class MarkdownDictionary(StenoDictionary):
         for new_key in new_keys:
             new_value = self._dict.get(new_key)
             if new_value:
-                key = '/'.join(new_key)
+                key = "/".join(new_key)
                 key_quote = (
                     '"'
                     if (new_key[0].startswith("#") or new_key[0].startswith("*"))

@@ -61,6 +61,8 @@ HEL/HRO: hello
         dictionary[("T-T",)] = ' "test" '
         dictionary[("T-",)] = " 'test' "
         dictionary[("R-R",)] = "\n"
+        dictionary[("R*R",)] = "\r"
+        dictionary[("TAB",)] = "\t"
         dictionary[("#S-",)] = "1"
         dictionary[("KW-T",)] = '"'
         dictionary[("AE",)] = "'"
@@ -85,6 +87,8 @@ T-FT: " test"
 T-T: ' "test" '
 T-: " 'test' "
 R-R: \\\\n
+R*R: \\\\r
+TAB: \\\\t
 "#S-": 1
 KW-T: '"'
 AE: "'"
