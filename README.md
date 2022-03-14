@@ -13,6 +13,7 @@ This project was borne out of a desire for a dictionary format with these featur
 
 - [Installation](#installation)
   - [Git version](#git-version)
+  - [Status](#status)
   - [For development](#for-development)
 - [Format](#format)
   - [Where to put your definitions](#where-to-put-your-definitions)
@@ -43,6 +44,10 @@ On the [command-line](https://plover.readthedocs.io/en/latest/cli_reference.html
 ```bash
 plover -s plover_plugins install git+https://github.com/antistic/plover_markdown_dictionary.git
 ```
+
+### Status
+
+This plugin is experimental and might have some bugs. Feel free to [open an issue](./issues/new) if you find one, and read the changelog when upgrading.
 
 ### For development
 
