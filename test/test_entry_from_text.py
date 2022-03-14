@@ -1,6 +1,6 @@
 import pytest
 
-from plover_markdown_dictionary import Entry, entry_from_text
+from plover_markdown_dictionary import entry_from_text
 
 
 @pytest.mark.parametrize(
@@ -8,7 +8,7 @@ from plover_markdown_dictionary import Entry, entry_from_text
     [
         (
             "#S: 1\n",
-            ("#S",),
+            ("1",),
             "",
             "1",
             "",
@@ -48,7 +48,7 @@ from plover_markdown_dictionary import Entry, entry_from_text
         ),
         (
             "'#S': '1'          # single quotes\n",
-            ("#S",),
+            ("1",),
             "'",
             "1",
             "'",
@@ -87,7 +87,7 @@ from plover_markdown_dictionary import Entry, entry_from_text
             "",
         ),
         (
-            "HAERB: \# # hash character in the right hand side\n",
+            "HAERB: \\# # hash character in the right hand side\n",
             ("HAERB",),
             "",
             "#",
@@ -98,7 +98,7 @@ from plover_markdown_dictionary import Entry, entry_from_text
         ),
         (
             "'#-T': 9 # note that you don't have to escape the # in the left side\n",
-            ("#-T",),
+            ("-9",),
             "'",
             "9",
             "",
@@ -211,7 +211,7 @@ from plover_markdown_dictionary import Entry, entry_from_text
         ),
         (
             '6:"##"#\n',
-            ("6",),
+            ("-6",),
             "",
             "##",
             '"',
@@ -293,7 +293,7 @@ from plover_markdown_dictionary import Entry, entry_from_text
             "# backslash",
         ),
         (
-            "HAERB/TPRAEUS/WAO : \# phrase  woo  # comment\n",
+            "HAERB/TPRAEUS/WAO : \\# phrase  woo  # comment\n",
             (
                 "HAERB",
                 "TPRAEUS",
@@ -356,7 +356,6 @@ def test_updated():
     [
         "",
         "\n",
-        "a: b\n",
         'KW-T: "',
         "PW-RBL: \\",
     ],
@@ -364,3 +363,13 @@ def test_updated():
 def test_entry_fails(input):
     with pytest.raises(ValueError):
         entry_from_text(input)
+
+@pytest.mark.parametrize(
+    "input",
+    [
+        "invalid: steno\n",
+    ],
+)
+def test_entry_soft_fails(input, caplog):
+    entry_from_text(input)
+    assert "ValueError: invalid steno: " in caplog.text

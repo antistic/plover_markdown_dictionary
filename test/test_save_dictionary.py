@@ -886,33 +886,6 @@ TEFT: test
 """
         )
 
-    def test_delete_add_save_between(self, tmp_path):
-        filepath = tmp_path / "file.md"
-        filepath.write_text(
-            """# Dictionary
-```yaml
-TEFT: test
-```
-"""
-        )
-        dictionary = MarkdownDictionary()
-        dictionary._load(str(filepath))
-
-        del dictionary[("TEFT",)]
-        dictionary._save(str(filepath))
-        dictionary[("TEFT",)] = "test"
-        dictionary._save(str(filepath))
-
-        text = filepath.read_text()
-        assert (
-            text
-            == """# Dictionary
-```yaml
-TEFT: test
-```
-"""
-        )
-
     def test_delete_add_reload_between(self, tmp_path):
         filepath = tmp_path / "file.md"
         filepath.write_text(

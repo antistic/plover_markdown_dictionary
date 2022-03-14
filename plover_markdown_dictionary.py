@@ -1,7 +1,7 @@
 import re
 from dataclasses import dataclass
 
-
+from plover.steno import normalize_steno
 from plover.steno_dictionary import StenoDictionary
 
 
@@ -23,6 +23,7 @@ class Prose:
 class Entry:
     kind = "entry"
     key: str
+    key_string: str
     key_quote: str
     value: str
     updated_value: str
@@ -58,7 +59,7 @@ class Entry:
         return (
             prefix_string
             + self.key_quote
-            + "/".join(self.key)
+            + self.key_string
             + self.key_quote
             + self.separator
             + self.value_quote
@@ -82,7 +83,6 @@ first_pattern = re.compile(
     + ")?)"
     + r"([^:\s]+)(\s*:\s*)([^\n]+)\n"
 )
-left_pattern = re.compile(r"([\'\"]?)([#STKPWHRAO\*-EUFRPBLGTSDZ/]+)([\'\"]?)")
 right_quote_pattern = {}
 for q in ['"', "'"]:
     right_quote_pattern[q] = re.compile(
@@ -115,11 +115,15 @@ def entry_from_text(text, is_new=False):
     elif prefix == UPDATED_PREFIX:
         is_updated = True
 
-    left_match = left_pattern.fullmatch(left)
-    if left_match is None:
-        raise ValueError(f"Couldn't parse the left side of {text}")
-    key_start_quote, key, key_end_quote = left_match.groups()
-    assert key_start_quote == key_end_quote
+    key_quote = ''
+    key_string = left
+    if left[0] in ['"', "'"]:
+        if left[0] != left[-1]:
+            raise ValueError("Couldn't parse {left}: Incorrect quotes")
+        key_quote = left[0]
+        key_string = left[1:-1]
+
+    key = normalize_steno(key_string)
 
     q = right[0]
     if q == '"' or q == "'":
@@ -141,8 +145,9 @@ def entry_from_text(text, is_new=False):
         value = value.replace("\\n", "\n")
 
     return Entry(
-        key=tuple(key.split("/")),
-        key_quote=key_start_quote,
+        key=key,
+        key_string=key_string,
+        key_quote=key_quote,
         value=None if is_updated else value,
         updated_value=value,
         value_quote=value_quote,
@@ -246,6 +251,7 @@ class MarkdownDictionary(StenoDictionary):
         for new_key in new_keys:
             new_value = self._dict.get(new_key)
             if new_value:
+                key = '/'.join(new_key)
                 key_quote = (
                     '"'
                     if (new_key[0].startswith("#") or new_key[0].startswith("*"))
@@ -274,7 +280,8 @@ class MarkdownDictionary(StenoDictionary):
 
                 new_adds_lines.append(
                     Entry(
-                        key=new_key,
+                        key=key,
+                        key_string=key,
                         key_quote=key_quote,
                         value=new_value,
                         updated_value=new_value,
