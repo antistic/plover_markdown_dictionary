@@ -246,34 +246,7 @@ When the stroke is updated it is treated like a deletion of the old entry then t
 
 This file is an example! You can see the raw markdown [here](https://raw.githubusercontent.com/antistic/plover_markdown_dictionary/main/README.md).
 
-It is equivalent to the following json file (also see [example.json](./example.json):
-
-```json
-{
-"#-T": "9",
-"#S": "1",
-"*UR": "you are",
-"-T": "the",
-"2": "2",
-"HAERB": "#",
-"HRAOEUBG": "like",
-"K-PLT": "comment",
-"KP-L": "excel",
-"KP-PL": "example",
-"KPW-PL": "example",
-"KR-GS": "\"",
-"KWRE": "yes",
-"PW-RB": "\\",
-"REPT": "repeat",
-"S-PS": " ",
-"SKW-T": "'",
-"TEGT": "text",
-"TH": "this",
-"TH/STEUL": "this still",
-"WORBGS": "works"
-}
-
-```
+It is equivalent to [example.json](./example.json).
 
 ## Notes
 
